@@ -16,10 +16,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Reader {
+public class XmlReader {
 
     static final String PREMIO = "PREMIO-TITULO";
     static final String NOME = "NOME-DO-PREMIO-OU-TITULO";
+    static final String ANO = "ANO-DA-PREMIACAO";
 
     public List<Premio> readPremio(String arquivo){
         List<Premio> premios = new ArrayList<>();
@@ -51,6 +52,17 @@ public class Reader {
                         }
                     }
                     //resto
+                    if (startElement.getName().getLocalPart().equals(PREMIO)){
+                        premio = new Premio();
+                        //Leitura Attr
+                        Iterator<Attribute> attributeIterator = startElement.getAttributes();
+                        while(attributeIterator.hasNext()){
+                            Attribute attribute = attributeIterator.next();
+                            if(attribute.getName().toString().equals(ANO)){
+                                premio.setAno(attribute.getValue());
+                            }
+                        }
+                    }
                 }
                 //Fim do arquivo
                 if(event.isEndElement()){

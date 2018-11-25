@@ -4,9 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Lattes {
-    List<Premio> premios = new ArrayList<>();
-    List<String> artigos = new ArrayList<>();
-    List<String> eventos = new ArrayList<>();
+    private String nome;
+
+    private List<Premio> premios = new ArrayList<>();
+    private List<String> artigos = new ArrayList<>();
+    private List<String> eventos = new ArrayList<>();
+
+    //----------- Getters and Setters -----------
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
     public List<Premio> getPremios() {
         return premios;

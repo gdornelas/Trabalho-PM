@@ -1,6 +1,7 @@
 package view;
 
-import controller.Reader;
+import controller.LattesController;
+import controller.XmlReader;
 import model.Lattes;
 import model.Premio;
 
@@ -9,23 +10,24 @@ import java.util.List;
 
 public class Main {
 
+    public Lattes candidatos(String xml){
+
+        xml = "gleison.xml";
+        return LattesController.buildLattes(xml);
+    }
+
+    public void premios(List<Lattes> lattesList){
+        LattesController.calculaPremios(lattesList);
+    }
+
     public static void main(String[] args) {
 
-        Reader read = new Reader();
         List<Lattes> lattesList = new ArrayList<>();
+        String xml = "";
+        Main main = new Main();
 
-        Lattes lattes = new Lattes();
-
-        List<Premio> readPremio = read.readPremio("gleison.xml");
-
-        lattes.setPremios(readPremio);
-
-        lattesList.add(lattes);
-
-        for (Lattes lattes1 : lattesList){
-            System.out.println(lattes1.getPremios());
-            //System.out.println(premio);
-        }
+        lattesList.add(main.candidatos(xml));
+        main.premios(lattesList);
 
         System.out.println("Hello World!");
     }
