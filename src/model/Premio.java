@@ -4,6 +4,8 @@ public class Premio {
     private String nome;
     private String ano;
 
+    //----------- Getters and Setters -----------
+
     public String getNome() {
         return nome;
     }

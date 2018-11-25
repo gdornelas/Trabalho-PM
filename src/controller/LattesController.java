@@ -26,19 +26,20 @@ public class LattesController {
         for (Lattes lattes : lattesList) {
             int qtdPremios = 0;
 
-            List<Premio> premio = lattes.getPremios();
+            List<Premio> listaPremio = lattes.getPremios();
 
-            for (Premio premios : premio) {
+            for (Premio premios : listaPremio) {
                 if (parseInt(premios.getAno()) > Year.now().getValue() - 11) {
                     qtdPremios += 1;
                 }
             }
+
             System.out.println(lattes.getNome() + ": " + qtdPremios + " prêmios, totalizando " + qtdPremios + " pontos.");
-            /*if(verbose == true){
-                for (Premio premio : lattes.getPremios()){
-                    System.out.println(premio.getAno() + ", " + premio.getNome() + ".");
+            if(true == true){
+                for (Premio premios : listaPremio){
+                    System.out.println(premios.getAno() + ", " + premios.getNome() + ".");
                 }
-            }*/
+            }
         }
     }
 

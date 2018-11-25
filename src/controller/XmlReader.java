@@ -49,20 +49,13 @@ public class XmlReader {
                             if(attribute.getName().toString().equals(NOME)){
                                 premio.setNome(attribute.getValue());
                             }
-                        }
-                    }
-                    //resto
-                    if (startElement.getName().getLocalPart().equals(PREMIO)){
-                        premio = new Premio();
-                        //Leitura Attr
-                        Iterator<Attribute> attributeIterator = startElement.getAttributes();
-                        while(attributeIterator.hasNext()){
-                            Attribute attribute = attributeIterator.next();
                             if(attribute.getName().toString().equals(ANO)){
                                 premio.setAno(attribute.getValue());
                             }
                         }
                     }
+                    //resto
+
                 }
                 //Fim do arquivo
                 if(event.isEndElement()){
@@ -78,7 +71,7 @@ public class XmlReader {
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (XMLStreamException e){
+        } catch (XMLStreamException e) {
             e.printStackTrace();
         }
         return premios;
