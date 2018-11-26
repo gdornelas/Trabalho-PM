@@ -9,6 +9,7 @@ public class Lattes {
     private List<Premio> premios = new ArrayList<>();
     private List<String> artigos = new ArrayList<>();
     private List<String> eventos = new ArrayList<>();
+    private List<String> vinculos = new ArrayList<>();
 
     //----------- Getters and Setters -----------
 
@@ -42,5 +43,13 @@ public class Lattes {
 
     public void setEventos(List<String> eventos) {
         this.eventos = eventos;
+    }
+
+    public List<String> getVinculos() {
+        return vinculos;
+    }
+
+    public void setVinculos(List<String> vinculos) {
+        this.vinculos = vinculos;
     }
 }

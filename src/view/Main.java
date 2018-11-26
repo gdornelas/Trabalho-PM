@@ -1,9 +1,7 @@
 package view;
 
 import controller.LattesController;
-import controller.XmlReader;
 import model.Lattes;
-import model.Premio;
 
 import java.util.ArrayList;
 import java.util.List;

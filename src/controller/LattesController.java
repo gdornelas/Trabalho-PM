@@ -10,6 +10,10 @@ import static java.lang.Integer.parseInt;
 
 public class LattesController {
 
+    /**
+     * @param xml
+     * @return
+     */
     public static Lattes buildLattes(String xml){
 
         XmlReader read = new XmlReader();
@@ -17,6 +21,7 @@ public class LattesController {
         Lattes lattes = new Lattes();
         List<Premio> listaPremios = read.readPremio(xml);
         lattes.setPremios(listaPremios);
+        read.readMestrado(xml);
 
         return lattes;
     }
