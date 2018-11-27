@@ -14,16 +14,29 @@ public class LattesController {
      * @param xml
      * @return
      */
-    public static Candidato buildLattes(String xml){
+    public static Candidato constroiCandidato(String xml, String reprovacoes){
 
         XmlReader read = new XmlReader();
 
         Candidato candidato = new Candidato();
-        List<Premio> listaPremios = read.readPremio(xml);
-        candidato.setPremios(listaPremios);
-        read.readMestrado(xml);
+        //candidato.setNome(read.readNome(xml));
+        candidato.setLattes(xml);
+        candidato.setReprovacoes(reprovacoes);
+
+
+        //read.readMestrado(xml);
 
         return candidato;
+    }
+
+    public static void setPremios(List<Candidato> candidatoList){
+
+        XmlReader read = new XmlReader();
+
+        for (Candidato candidato : candidatoList){
+            List<Premio> listaPremios = read.readPremio(candidato.getLattes());
+            candidato.setPremios(listaPremios);
+        }
     }
 
     public static void calculaPremios(List<Candidato> candidatoList){

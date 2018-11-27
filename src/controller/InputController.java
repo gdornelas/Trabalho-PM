@@ -1,9 +1,15 @@
 package controller;
 
+import model.Candidato;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class InputController {
     public static void verificaParametros(String[] args) {
+
+        List<Candidato> candidatoList = new ArrayList<>();
 
         //Verificação da indicação do arquivo de saída
         if(Arrays.stream(args).anyMatch("-o"::equals)){
@@ -25,6 +31,12 @@ public class InputController {
 
         //Verificação de indicação de pelo menos um candidato
         if(Arrays.stream(args).anyMatch("-a"::equals)){
+            //List<Candidato> candidatoList = new ArrayList<>();
+            for (int i = 0; i < args.length; i++){
+                if (args[i].equals("-a")){
+                    candidatoList.add(LattesController.constroiCandidato(args[i + 1], args[i + 2]));
+                }
+            }
             //main.setArquivoSaida(Arrays.asList(args).indexOf("-o") + 1, Arrays.asList(args).indexOf("-o") + 2);
             System.out.println("ArroyLog");
         }else{
@@ -45,31 +57,37 @@ public class InputController {
             //main.setArquivoSaida(Arrays.asList(args).indexOf("-o") + 1);
             System.out.println("Verboso");
         }
+
         //Saída referente aos prêmios
         else if(Arrays.stream(args).anyMatch("-pr"::equals)){
-            //main.setArquivoSaida(Arrays.asList(args).indexOf("-o") + 1);
-            System.out.println("Verboso");
+            LattesController.setPremios(candidatoList);
+            LattesController.calculaPremios(candidatoList);
         }
+
         //Saída referente aos artigos completos no Qualis Restrito
         else if(Arrays.stream(args).anyMatch("-ar"::equals)){
             //main.setArquivoSaida(Arrays.asList(args).indexOf("-o") + 1);
             System.out.println("Verboso");
         }
+
         //Saída referente aos artigos completos fora do Qualis Restrito
         else if(Arrays.stream(args).anyMatch("-anr"::equals)){
             //main.setArquivoSaida(Arrays.asList(args).indexOf("-o") + 1);
             System.out.println("Verboso");
         }
+
         //Saída referente a participação de eventos classificados
         else if(Arrays.stream(args).anyMatch("-pe"::equals)){
             //main.setArquivoSaida(Arrays.asList(args).indexOf("-o") + 1);
             System.out.println("Verboso");
         }
+
         //Saída referente a existência de vínculo com a UNIRIO
         else if(Arrays.stream(args).anyMatch("-vi"::equals)){
             //main.setArquivoSaida(Arrays.asList(args).indexOf("-o") + 1);
             System.out.println("Verboso");
         }
+
         //Caso nenhum comando tenha sido indicado
         else{
 

@@ -6,6 +6,7 @@ import java.util.List;
 public class Candidato {
     private String nome;
     private String reprovacoes;
+    private String lattes;
 
     private List<Premio> premios = new ArrayList<>();
     private List<String> artigos = new ArrayList<>();
@@ -60,5 +61,13 @@ public class Candidato {
 
     public void setReprovacoes(String reprovacoes) {
         this.reprovacoes = reprovacoes;
+    }
+
+    public String getLattes() {
+        return lattes;
+    }
+
+    public void setLattes(String lattes) {
+        this.lattes = lattes;
     }
 }

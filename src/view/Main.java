@@ -1,31 +1,67 @@
 package view;
 
+import controller.InputController;
 import controller.LattesController;
-import model.Lattes;
+import model.Candidato;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
 
-    public Lattes candidatos(String xml){
-
-        xml = "gleison.xml";
-        return LattesController.buildLattes(xml);
+    //Chama função que verifica parâmetros do programa
+    public void verificaEntrada(String[] args){
+        InputController.verificaParametros(args);
     }
 
-    public void premios(List<Lattes> lattesList){
-        LattesController.calculaPremios(lattesList);
+    /*public Candidato candidatos(String xml){
+
+        xml = "monica.xml";
+        return LattesController.constroiCandidato(xml);
+    }*/
+
+    public void saidaCompleta(){
+
+    }
+
+    public void premios(List<Candidato> candidatoList){
+        LattesController.calculaPremios(candidatoList);
+    }
+
+    public void artigosQualis(){
+
+    }
+
+    public void artigosForaQualis(){
+
+    }
+
+    public void eventos(){
+
+    }
+
+    public void vinculos(){
+
     }
 
     public static void main(String[] args) {
 
-        List<Lattes> lattesList = new ArrayList<>();
-        String xml = "";
         Main main = new Main();
 
-        lattesList.add(main.candidatos(xml));
-        main.premios(lattesList);
+        main.verificaEntrada(args);
+
+        /*
+        for(int indice = 0; indice < args.length; indice++){
+            if(args[indice].equals("-v")){
+                boolean verboso = true;
+            }
+            if (args[indice].equals("-o")){
+
+            }else{
+                throw new Exception() e;
+            }
+        }
+        */
 
         System.out.println("Hello World!");
     }
