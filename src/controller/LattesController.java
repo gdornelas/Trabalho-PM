@@ -1,6 +1,6 @@
 package controller;
 
-import model.Lattes;
+import model.Candidato;
 import model.Premio;
 
 import java.time.Year;
@@ -14,24 +14,24 @@ public class LattesController {
      * @param xml
      * @return
      */
-    public static Lattes buildLattes(String xml){
+    public static Candidato buildLattes(String xml){
 
         XmlReader read = new XmlReader();
 
-        Lattes lattes = new Lattes();
+        Candidato candidato = new Candidato();
         List<Premio> listaPremios = read.readPremio(xml);
-        lattes.setPremios(listaPremios);
+        candidato.setPremios(listaPremios);
         read.readMestrado(xml);
 
-        return lattes;
+        return candidato;
     }
 
-    public static void calculaPremios(List<Lattes> lattesList){
+    public static void calculaPremios(List<Candidato> candidatoList){
 
-        for (Lattes lattes : lattesList) {
+        for (Candidato candidato : candidatoList) {
             int qtdPremios = 0;
 
-            List<Premio> listaPremio = lattes.getPremios();
+            List<Premio> listaPremio = candidato.getPremios();
 
             for (Premio premios : listaPremio) {
                 if (parseInt(premios.getAno()) > Year.now().getValue() - 11) {
@@ -39,7 +39,7 @@ public class LattesController {
                 }
             }
 
-            System.out.println(lattes.getNome() + ": " + qtdPremios + " prêmios, totalizando " + qtdPremios + " pontos.");
+            System.out.println(candidato.getNome() + ": " + qtdPremios + " prêmios, totalizando " + qtdPremios + " pontos.");
             if(true == true){
                 for (Premio premios : listaPremio){
                     System.out.println(premios.getAno() + ", " + premios.getNome() + ".");

@@ -3,8 +3,9 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Lattes {
+public class Candidato {
     private String nome;
+    private String reprovacoes;
 
     private List<Premio> premios = new ArrayList<>();
     private List<String> artigos = new ArrayList<>();
@@ -51,5 +52,13 @@ public class Lattes {
 
     public void setVinculos(List<String> vinculos) {
         this.vinculos = vinculos;
+    }
+
+    public String getReprovacoes() {
+        return reprovacoes;
+    }
+
+    public void setReprovacoes(String reprovacoes) {
+        this.reprovacoes = reprovacoes;
     }
 }
