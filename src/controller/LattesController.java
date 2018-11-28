@@ -40,7 +40,7 @@ public class LattesController {
         }
     }
 
-    public static void calculaPremios(List<Candidato> candidatoList) throws IOException {
+    public static void calculaPremios(List<Candidato> candidatoList, boolean verboso) throws IOException {
 
         for (Candidato candidato : candidatoList) {
             int qtdPremios = 0;
@@ -57,7 +57,7 @@ public class LattesController {
             file.escrevePremio(candidato.getNome(), Integer.toString(qtdPremios));
             //TODO remover print
             System.out.println(candidato.getNome() + ": " + qtdPremios + " prêmios, totalizando " + qtdPremios + " pontos.");
-            if(true == true){
+            if(verboso == true){
                 for (Premio premios : listaPremio){
                     file.escrevePremioVerboso(premios.getAno(), premios.getNome());
                     System.out.println(premios.getAno() + ": " + premios.getNome() + ".");

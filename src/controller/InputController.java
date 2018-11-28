@@ -11,10 +11,13 @@ public class InputController {
     public static void verificaParametros(String[] args) throws IOException {
 
         List<Candidato> candidatoList = new ArrayList<>();
+        boolean verboso;
 
         //Verificação da indicação do arquivo de saída
         if(Arrays.stream(args).anyMatch("-o"::equals)){
-            //main.setArquivoSaida(Arrays.asList(args).indexOf("-o") + 1);
+
+            SetFiles setSaida = new SetFiles();
+            setSaida.setArquivoSaida(args[Arrays.asList(args).indexOf("-o") + 1]);
             System.out.println("ArroySaida");
         }else{
             IllegalArgumentException erro = new IllegalArgumentException();
@@ -48,8 +51,10 @@ public class InputController {
 
         //Verificação de indicação do modo verboso
         if(Arrays.stream(args).anyMatch("-v"::equals)){
-            //main.setArquivoSaida(Arrays.asList(args).indexOf("-o") + 1);
-            System.out.println("Verboso");
+            verboso = true;
+            System.out.println("Verboso ativado");
+        }else{
+            verboso = false;
         }
 
         //Verificação de indicação do comando a ser processado
@@ -63,7 +68,7 @@ public class InputController {
         //Saída referente aos prêmios
         else if(Arrays.stream(args).anyMatch("-pr"::equals)){
             LattesController.setPremios(candidatoList);
-            LattesController.calculaPremios(candidatoList);
+            LattesController.calculaPremios(candidatoList, verboso);
         }
 
         //Saída referente aos artigos completos no Qualis Restrito
