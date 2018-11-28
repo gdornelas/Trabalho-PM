@@ -3,7 +3,11 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe de modelo que representa um candidato
+ */
 public class Candidato {
+
     private String nome;
     private String reprovacoes;
     private String lattes;

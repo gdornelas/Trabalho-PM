@@ -8,8 +8,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Controlador de argumentos de entrada do programa
+ */
 public class InputController {
-    public static void verificaParametros(String[] args) throws ComandoNaoEncontradoException {
+
+    /**
+     * Função que verifica os parâmetros forncecidos e executa suas funções
+     * @param args: lista de argumentos fornecidos
+     * @throws ComandoNaoEncontradoException: exceção caso algum argumento essencial não seja encontrado
+     */
+    public void verificaParametros(String[] args) throws ComandoNaoEncontradoException {
 
         List<Candidato> candidatoList = new ArrayList<>();
         boolean verboso;
@@ -17,7 +26,7 @@ public class InputController {
         LattesController lattesController = new LattesController();
 
 
-        //Verificação da indicação do arquivo de saída
+        //Verificação da indicação do arquivo de saída (ESSENCIAL)
         if(Arrays.stream(args).anyMatch("-o"::equals)){
 
             SetFiles setSaida = new SetFiles();
@@ -36,13 +45,12 @@ public class InputController {
             System.out.println("qqq"+erro.getMessage());
         }
 
-        //Verificação de indicação de pelo menos um candidato
+        //Verificação de indicação de pelo menos um candidato (ESSENCIAL)
         if(Arrays.stream(args).anyMatch("-a"::equals)){
-            //TODO
-            //List<Candidato> candidatoList = new ArrayList<>();
+
             for (int i = 0; i < args.length; i++){
                 if (args[i].equals("-a")){
-                    candidatoList.add(LattesController.constroiCandidato(args[i + 1], args[i + 2]));
+                    candidatoList.add(lattesController.constroiCandidato(args[i + 1], args[i + 2]));
                 }
             }
         }else{
@@ -67,9 +75,9 @@ public class InputController {
 
         //Saída referente aos prêmios
         else if(Arrays.stream(args).anyMatch("-pr"::equals)){
-            LattesController.setPremios(candidatoList);
+            lattesController.setPremios(candidatoList);
             try {
-                LattesController.calculaPremios(candidatoList, verboso, caminhos.get(0));
+                lattesController.calculaPremios(candidatoList, verboso, caminhos.get(0));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -77,8 +85,8 @@ public class InputController {
 
         //Saída referente aos artigos completos no Qualis Restrito
         else if(Arrays.stream(args).anyMatch("-ar"::equals)){
-            lattesController.setArtigos();
-            lattesController.calculaArtigosQualis();
+            lattesController.setArtigos(candidatoList);
+            lattesController.calculaArtigosQualis(candidatoList, verboso, caminhos.get(0));
         }
 
         //Saída referente aos artigos completos fora do Qualis Restrito

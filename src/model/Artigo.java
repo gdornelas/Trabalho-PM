@@ -1,11 +1,14 @@
 package model;
 
+/**
+ * Classe de modelo que representa um artigo do candidato
+ */
 public class Artigo {
 
-    String ano;
-    String nome;
-    String local;
-    String qualis;
+    private String ano;
+    private String nome;
+    private String local;
+    private String qualis;
 
     //----------- Getters and Setters -----------
 

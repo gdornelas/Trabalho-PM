@@ -13,13 +13,18 @@ import java.util.List;
 
 import static java.lang.Integer.parseInt;
 
+/**
+ * Controlador de construção do candidato e cálculo de suas informações
+ */
 public class LattesController {
 
     /**
-     * @param xml
+     * Função de construção de um novo candidato para ranqueamento
+     * @param xml: endereço do lattes do candidato
+     * @param reprovacoes: quantidade de reprovações do candidato
      * @return
      */
-    public static Candidato constroiCandidato(String xml, String reprovacoes){
+    public Candidato constroiCandidato(String xml, String reprovacoes){
 
         XmlReader read = new XmlReader();
 
@@ -31,7 +36,11 @@ public class LattesController {
         return candidato;
     }
 
-    public static void setPremios(List<Candidato> candidatoList){
+    /**
+     * Função de set dos prêmios de cada candidato
+     * @param candidatoList: lista de candidatos a serem avaliados
+     */
+    public void setPremios(List<Candidato> candidatoList){
 
         XmlReader read = new XmlReader();
 
@@ -41,7 +50,14 @@ public class LattesController {
         }
     }
 
-    public static void calculaPremios(List<Candidato> candidatoList, boolean verboso, File saida) throws IOException {
+    /**
+     * Função de cálculo da pontuação dos candidatos em relação aos prêmios
+     * @param candidatoList: lista de candidatos a serem avaliados
+     * @param verboso: boolean de indicação se o modo verboso está ativo
+     * @param saida: indicação do arquivo de saída
+     * @throws IOException
+     */
+    public void calculaPremios(List<Candidato> candidatoList, boolean verboso, File saida) throws IOException {
 
         for (Candidato candidato : candidatoList) {
             int qtdPremios = 0;
@@ -67,6 +83,10 @@ public class LattesController {
         }
     }
 
+    /**
+     * Função de set dos vínculos de cada candidato
+     * @param candidatoList: lista de candidatos a serem avaliados
+     */
     public void setVinculo(List<Candidato> candidatoList){
         XmlReader reader = new XmlReader();
 
@@ -78,6 +98,12 @@ public class LattesController {
 
     }
 
+    /**
+     * Função de cálculo da pontuação dos candidatos em relação aos vínculos
+     * @param candidatoList: lista de candidatos a serem avaliados
+     * @param verboso: boolean de indicação se o modo verboso está ativo
+     * @param saida: indicação do arquivo de saída
+     */
     public void calculaVinculo(List<Candidato> candidatoList, boolean verboso, File saida){
         for(Candidato candidato : candidatoList){
             int qtdVinculos = 0;
@@ -90,6 +116,8 @@ public class LattesController {
                     if(qtdVinculos == 2){
                         break;
                     }
+                }else{
+                    listaVinculo.remove(vinculo);
                 }
             }
 
@@ -107,12 +135,47 @@ public class LattesController {
         }
     }
 
+    /**
+     * Função de set dos artigos de cada candidato
+     * @param candidatoList: lista de candidatos a serem avaliados
+     */
     public void setArtigos(List<Candidato> candidatoList) {
         XmlReader reader = new XmlReader();
 
         for(Candidato candidato : candidatoList){
-            List<Artigo> listaArtigos= reader.readArtigo(candidato.getLattes());
+            List<Artigo> listaArtigos= reader.readTrabalhosEventos(candidato.getLattes());
+            listaArtigos.addAll(reader.readArtigoPublicado(candidato.getLattes()));
             candidato.setArtigos(listaArtigos);
+        }
+    }
+
+    /**
+     * Função de cálculo da pontuação dos candidatos em relação aos artigos completos no Qualis Restrito
+     * @param candidatoList: lista de candidatos a serem avaliados
+     * @param verboso: boolean de indicação se o modo verboso está ativo
+     * @param saida: indicação do arquivo de saída
+     */
+    public void calculaArtigosQualis(List<Candidato> candidatoList, boolean verboso, File saida) {
+        for(Candidato candidato : candidatoList){
+            int qtdArtigoQualis = 0;
+
+            List<Artigo> listaArtigo = candidato.getArtigos();
+
+            for(Artigo artigo : listaArtigo){
+
+            }
+
+            FileWritterController file = new FileWritterController();
+            try {
+                file.escreveVinculo(candidato.getNome(), Integer.toString(qtdArtigoQualis), saida);
+                if(verboso == true){
+                    for(Artigo artigo : listaArtigo){
+
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

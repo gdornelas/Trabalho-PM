@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * Classe de modelo que representa um vínculo do candidato com a UNIRIO
+ */
 public class Vinculo {
 
     private String tipo;

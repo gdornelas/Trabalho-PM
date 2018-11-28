@@ -1,6 +1,10 @@
 package model;
 
+/**
+ * Classe de modelo que representa um prêmio do candidato
+ */
 public class Premio {
+
     private String nome;
     private String ano;
 
