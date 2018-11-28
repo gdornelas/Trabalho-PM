@@ -2,10 +2,12 @@ package controller;
 
 import model.Candidato;
 import model.Premio;
+import model.Vinculo;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.Year;
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Integer.parseInt;
@@ -24,9 +26,6 @@ public class LattesController {
         candidato.setNome(read.readNome(xml));
         candidato.setLattes(xml);
         candidato.setReprovacoes(reprovacoes);
-
-
-        //read.readMestrado(xml);
 
         return candidato;
     }
@@ -63,6 +62,47 @@ public class LattesController {
                     file.escrevePremioVerboso(premios.getAno(), premios.getNome(), saida);
                     System.out.println(premios.getAno() + ": " + premios.getNome() + ".");
                 }
+            }
+        }
+    }
+
+    public void setVinculo(List<Candidato> candidatoList){
+        XmlReader read = new XmlReader();
+        XmlReader reader = new XmlReader();
+
+        for (Candidato candidato : candidatoList){
+            List<Vinculo> listaVinculo = new ArrayList<>();
+            listaVinculo.add(reader.readMestrado(candidato.getLattes()));
+
+        }
+
+    }
+
+    public void calculaVinculo(List<Candidato> candidatoList, boolean verboso, File saida){
+        for(Candidato candidato : candidatoList){
+            int qtdVinculos = 0;
+
+            List<Vinculo> listaVinculo = candidato.getVinculos();
+
+            for(Vinculo vinculo : listaVinculo){
+                if(parseInt(vinculo.getAno()) > Year.now().getValue() - 11){
+                    qtdVinculos += 1;
+                    if(qtdVinculos == 2){
+                        break;
+                    }
+                }
+            }
+
+            FileWritterController file = new FileWritterController();
+            try {
+                file.escreveVinculo(candidato.getNome(), Integer.toString(qtdVinculos), saida);
+                if(verboso == true){
+                    for(Vinculo vinculo : listaVinculo){
+                        file.escreveVinculoVerboso(vinculo.getAno(), vinculo.getTipo(), saida);
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }

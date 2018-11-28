@@ -14,6 +14,7 @@ public class InputController {
         List<Candidato> candidatoList = new ArrayList<>();
         boolean verboso;
         List<File> caminhos = new ArrayList<>();
+        LattesController lattesController = new LattesController();
 
 
         //Verificação da indicação do arquivo de saída
@@ -97,13 +98,13 @@ public class InputController {
 
         //Saída referente a existência de vínculo com a UNIRIO
         else if(Arrays.stream(args).anyMatch("-vi"::equals)){
-            //main.setArquivoSaida(Arrays.asList(args).indexOf("-o") + 1);
-            System.out.println("Verboso");
+            lattesController.setVinculo(candidatoList);
+            lattesController.calculaVinculo(candidatoList, verboso, caminhos.get(0));
         }
 
         //Caso nenhum comando tenha sido indicado
         else{
-
+            throw new ComandoNaoEncontradoException("Nenhum parâmetro foi informado!");
         }
 
 

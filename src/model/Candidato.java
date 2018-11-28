@@ -11,7 +11,7 @@ public class Candidato {
     private List<Premio> premios = new ArrayList<>();
     private List<String> artigos = new ArrayList<>();
     private List<String> eventos = new ArrayList<>();
-    private List<String> vinculos = new ArrayList<>();
+    private List<Vinculo> vinculos = new ArrayList<>();
 
     //----------- Getters and Setters -----------
 
@@ -47,11 +47,11 @@ public class Candidato {
         this.eventos = eventos;
     }
 
-    public List<String> getVinculos() {
+    public List<Vinculo> getVinculos() {
         return vinculos;
     }
 
-    public void setVinculos(List<String> vinculos) {
+    public void setVinculos(List<Vinculo> vinculos) {
         this.vinculos = vinculos;
     }
 

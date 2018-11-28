@@ -20,4 +20,18 @@ public class FileWritterController {
         printWriter.printf("\n%s: %s.", ano, nome);
         printWriter.close();
     }
+
+    public void escreveVinculo(String nome, String entrada, File saida) throws IOException {
+        FileWriter fileWriter = new FileWriter(saida);
+        PrintWriter printWriter = new PrintWriter(fileWriter);
+        printWriter.printf("%s: %s vínculos, totalizando %s pontos.", nome, entrada, entrada);
+        printWriter.close();
+    }
+
+    public void escreveVinculoVerboso(String ano, String nome, File saida) throws IOException {
+        FileWriter fileWriter = new FileWriter(saida, true);
+        PrintWriter printWriter = new PrintWriter(fileWriter);
+        printWriter.printf("\n%s: %s.", ano, nome);
+        printWriter.close();
+    }
 }
