@@ -4,13 +4,14 @@ import controller.InputController;
 import controller.LattesController;
 import model.Candidato;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
 
     //Chama função que verifica parâmetros do programa
-    public void verificaEntrada(String[] args){
+    public void verificaEntrada(String[] args) throws IOException {
         InputController.verificaParametros(args);
     }
 
@@ -22,10 +23,6 @@ public class Main {
 
     public void saidaCompleta(){
 
-    }
-
-    public void premios(List<Candidato> candidatoList){
-        LattesController.calculaPremios(candidatoList);
     }
 
     public void artigosQualis(){
@@ -44,7 +41,7 @@ public class Main {
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         Main main = new Main();
 

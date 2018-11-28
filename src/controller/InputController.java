@@ -2,12 +2,13 @@ package controller;
 
 import model.Candidato;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class InputController {
-    public static void verificaParametros(String[] args) {
+    public static void verificaParametros(String[] args) throws IOException {
 
         List<Candidato> candidatoList = new ArrayList<>();
 
@@ -31,6 +32,7 @@ public class InputController {
 
         //Verificação de indicação de pelo menos um candidato
         if(Arrays.stream(args).anyMatch("-a"::equals)){
+            //TODO
             //List<Candidato> candidatoList = new ArrayList<>();
             for (int i = 0; i < args.length; i++){
                 if (args[i].equals("-a")){

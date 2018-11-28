@@ -19,12 +19,17 @@ import java.util.List;
 
 public class XmlReader {
 
-    static final String PREMIO = "PREMIO-TITULO";
-    static final String NOME = "NOME-DO-PREMIO-OU-TITULO";
-    static final String ANO = "ANO-DA-PREMIACAO";
-    static final String MESTRADO = "MESTRADO";
-    static final String NOMEINSTIUICAO = "NOME-INSTITUICAO";
-    static final String ANOCONCLUSAO = "ANO-DE-CONCLUSAO";
+    final String PREMIO = "PREMIO-TITULO";
+    final String NOME = "NOME-DO-PREMIO-OU-TITULO";
+    final String ANO = "ANO-DA-PREMIACAO";
+
+    final String DADOSGERAIS = "DADOS-GERAIS";
+    final String NOMECANDIDATO = "NOME-COMPLETO";
+
+
+    final String MESTRADO = "MESTRADO";
+    final String NOMEINSTIUICAO = "NOME-INSTITUICAO";
+    final String ANOCONCLUSAO = "ANO-DE-CONCLUSAO";
 
     public List<Premio> readPremio(String arquivo){
         List<Premio> premios = new ArrayList<>();
@@ -43,10 +48,10 @@ public class XmlReader {
 
                 if(event.isStartElement()){
                     StartElement startElement = event.asStartElement();
-                    //Se tivermos um elemento premio, criamos um novo
+                    //Caso encontre a tag no XML, cria um novo Prêmio
                     if (startElement.getName().getLocalPart().equals(PREMIO)){
                         premio = new Premio();
-                        //Leitura Attr
+                        //Leitura do atributo do elemento
                         Iterator<Attribute> attributeIterator = startElement.getAttributes();
                         while(attributeIterator.hasNext()){
                             Attribute attribute = attributeIterator.next();
@@ -58,12 +63,11 @@ public class XmlReader {
                             }
                         }
                     }
-                    //resto
-
                 }
-                //Fim do arquivo
+                //Fim do elemento premio no XML
                 if(event.isEndElement()){
                     EndElement endElement = event.asEndElement();
+                    //Adição do prêmio da lista de prêmios do candidato
                     if (endElement.getName().getLocalPart().equals(PREMIO)){
                         premios.add(premio);
                     }
@@ -90,23 +94,23 @@ public class XmlReader {
             //Setando leitor de eventos XML
             InputStream inputStream = new FileInputStream(arquivo);
             XMLEventReader eventReader = inputFactory.createXMLEventReader(inputStream);
+
             //Leitura do arquivo XML
-
-
             while (eventReader.hasNext()){
                 XMLEvent event = eventReader.nextEvent();
 
                 if(event.isStartElement()){
                     StartElement startElement = event.asStartElement();
-                    //Se tivermos um elemento premio, criamos um novo
+                    //Caso encontre a tag no XML
                     if (startElement.getName().getLocalPart().equals(MESTRADO)){
-                        vinculo = new Vinculo();
-                        //Leitura Attr
+                        //Leitura do atributo
                         Iterator<Attribute> attributeIterator = startElement.getAttributes();
                         while(attributeIterator.hasNext()){
                             Attribute attribute = attributeIterator.next();
                             if(attribute.getName().toString().equals(NOMEINSTIUICAO)){
+                                //Caso o valor do atributo seja a UNIRIO, adiciona o vínculo
                                 if (attribute.getValue().equals("Universidade Federal do Estado do Rio de Janeiro")){
+                                    vinculo = new Vinculo();
                                     vinculo.setTipo("Mestrado");
                                 }else{
                                     break;
@@ -117,11 +121,7 @@ public class XmlReader {
                             }
                         }
                     }
-                    //resto
-
                 }
-                //Fim do arquivo
-
             }
 
 
@@ -131,6 +131,45 @@ public class XmlReader {
             e.printStackTrace();
         }
         return vinculo;
+    }
+
+    public String readNome(String arquivo){
+
+        String nome = null;
+
+        try{
+            //Criação fábrica
+            XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+            //Setando leitor de eventos XML
+            InputStream inputStream = new FileInputStream(arquivo);
+            XMLEventReader eventReader = inputFactory.createXMLEventReader(inputStream);
+            //Leitura do arquivo XML
+
+            while (eventReader.hasNext()){
+                XMLEvent event = eventReader.nextEvent();
+
+                if(event.isStartElement()){
+                    StartElement startElement = event.asStartElement();
+                    //Encontra o elemento no XML
+                    if (startElement.getName().getLocalPart().equals(DADOSGERAIS)){
+                        //Leitura do atributo do elemento
+                        Iterator<Attribute> attributeIterator = startElement.getAttributes();
+                        while(attributeIterator.hasNext()){
+                            Attribute attribute = attributeIterator.next();
+                            if(attribute.getName().toString().equals(NOMECANDIDATO)){
+                                nome = attribute.getValue();
+                            }
+                        }
+                    }
+                }
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (XMLStreamException e) {
+            e.printStackTrace();
+        }
+        return nome;
     }
 
 }

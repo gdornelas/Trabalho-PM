@@ -3,6 +3,7 @@ package controller;
 import model.Candidato;
 import model.Premio;
 
+import java.io.IOException;
 import java.time.Year;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class LattesController {
         XmlReader read = new XmlReader();
 
         Candidato candidato = new Candidato();
-        //candidato.setNome(read.readNome(xml));
+        candidato.setNome(read.readNome(xml));
         candidato.setLattes(xml);
         candidato.setReprovacoes(reprovacoes);
 
@@ -39,7 +40,7 @@ public class LattesController {
         }
     }
 
-    public static void calculaPremios(List<Candidato> candidatoList){
+    public static void calculaPremios(List<Candidato> candidatoList) throws IOException {
 
         for (Candidato candidato : candidatoList) {
             int qtdPremios = 0;
@@ -52,6 +53,8 @@ public class LattesController {
                 }
             }
 
+            FileWritterController file = new FileWritterController();
+            file.escreveArquivo(Integer.toString(qtdPremios));
             System.out.println(candidato.getNome() + ": " + qtdPremios + " prêmios, totalizando " + qtdPremios + " pontos.");
             if(true == true){
                 for (Premio premios : listaPremio){
