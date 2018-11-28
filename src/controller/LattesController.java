@@ -54,11 +54,13 @@ public class LattesController {
             }
 
             FileWritterController file = new FileWritterController();
-            file.escreveArquivo(Integer.toString(qtdPremios));
+            file.escrevePremio(candidato.getNome(), Integer.toString(qtdPremios));
+            //TODO remover print
             System.out.println(candidato.getNome() + ": " + qtdPremios + " prêmios, totalizando " + qtdPremios + " pontos.");
             if(true == true){
                 for (Premio premios : listaPremio){
-                    System.out.println(premios.getAno() + ", " + premios.getNome() + ".");
+                    file.escrevePremioVerboso(premios.getAno(), premios.getNome());
+                    System.out.println(premios.getAno() + ": " + premios.getNome() + ".");
                 }
             }
         }

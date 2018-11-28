@@ -4,17 +4,16 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.junit.Assert.*;
-
 public class FileWritterControllerTest {
 
     @Test
     public void escreveArquivo() throws IOException {
 
-        String entrada = "Jasgfdpion";
+        String nome = "JasponNome";
+        String entrada = "Jaspon2";
 
         FileWritterController test = new FileWritterController();
 
-        test.escreveArquivo(entrada);
+        test.escrevePremio(nome, entrada);
     }
 }
