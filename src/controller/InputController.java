@@ -31,18 +31,16 @@ public class InputController {
 
             SetFiles setSaida = new SetFiles();
             caminhos.add(setSaida.setArquivoSaida(args[Arrays.asList(args).indexOf("-o") + 1]));
-            System.out.println("ArroySaida");
         }else{
             throw new ComandoNaoEncontradoException("Comando -o não encontrado!");
         }
 
         //Verificação de indicação do arquivo de log
         if(Arrays.stream(args).anyMatch("-l"::equals)){
-            //main.setArquivoSaida(Arrays.asList(args).indexOf("-o") + 1);
-            System.out.println("ArroyLog");
+            SetFiles setSaida = new SetFiles();
+            caminhos.add(setSaida.setArquivoSaida(args[Arrays.asList(args).indexOf("-l") + 1]));
         }else{
-            IllegalArgumentException erro = new IllegalArgumentException();
-            System.out.println("qqq"+erro.getMessage());
+            throw new ComandoNaoEncontradoException("Comando -l não encontrado!");
         }
 
         //Verificação de indicação de pelo menos um candidato (ESSENCIAL)
@@ -69,8 +67,16 @@ public class InputController {
 
         //Saída completa
         if(Arrays.stream(args).anyMatch("-c"::equals)){
-            //main.setArquivoSaida(Arrays.asList(args).indexOf("-o") + 1);
-            System.out.println("Verboso");
+            lattesController.setPremios(candidatoList);
+            lattesController.setArtigos(candidatoList);
+            lattesController.setVinculo(candidatoList);
+            try {
+                lattesController.calculaPremios(candidatoList, verboso, caminhos.get(0));
+                lattesController.calculaArtigosQualis(candidatoList, verboso, caminhos);
+                lattesController.calculaVinculo(candidatoList, verboso, caminhos.get(0));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         //Saída referente aos prêmios
@@ -86,19 +92,20 @@ public class InputController {
         //Saída referente aos artigos completos no Qualis Restrito
         else if(Arrays.stream(args).anyMatch("-ar"::equals)){
             lattesController.setArtigos(candidatoList);
-            lattesController.calculaArtigosQualis(candidatoList, verboso, caminhos.get(0));
+            lattesController.calculaArtigosQualis(candidatoList, verboso, caminhos);
         }
 
         //Saída referente aos artigos completos fora do Qualis Restrito
         else if(Arrays.stream(args).anyMatch("-anr"::equals)){
-            //main.setArquivoSaida(Arrays.asList(args).indexOf("-o") + 1);
-            System.out.println("Verboso");
+            lattesController.setArtigos(candidatoList);
+            //lattesController.calculaArtigosQualisFora(candidatoList, verboso, caminhos);
+
         }
 
         //Saída referente a participação de eventos classificados
         else if(Arrays.stream(args).anyMatch("-pe"::equals)){
-            //main.setArquivoSaida(Arrays.asList(args).indexOf("-o") + 1);
-            System.out.println("Verboso");
+            //lattesController.setEventos(candidatoList);
+            //lattesController.calculaEventos(candidatoList, verboso, caminhos);
         }
 
         //Saída referente a existência de vínculo com a UNIRIO

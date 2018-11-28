@@ -26,4 +26,23 @@ public class SetFiles {
 
         return saida;
     }
+
+    /**
+     * Função set do arquivo de log
+     * @param endereco: endereço do arquivo de saída
+     * @return: indicação do arquivo de saída
+     */
+    public File setArquivoLog(String endereco){
+        File saida = new File(endereco);
+
+        if (!saida.exists()) {
+            try {
+                saida.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return saida;
+    }
 }

@@ -151,11 +151,11 @@ public class LattesController {
 
     /**
      * Função de cálculo da pontuação dos candidatos em relação aos artigos completos no Qualis Restrito
-     * @param candidatoList: lista de candidatos a serem avaliados
-     * @param verboso: boolean de indicação se o modo verboso está ativo
-     * @param saida: indicação do arquivo de saída
+     * @param candidatoList : lista de candidatos a serem avaliados
+     * @param verboso : boolean de indicação se o modo verboso está ativo
+     * @param saida : indicação do arquivo de saída
      */
-    public void calculaArtigosQualis(List<Candidato> candidatoList, boolean verboso, File saida) {
+    public void calculaArtigosQualis(List<Candidato> candidatoList, boolean verboso, List<File> saida) {
         for(Candidato candidato : candidatoList){
             int qtdArtigoQualis = 0;
 
@@ -167,7 +167,7 @@ public class LattesController {
 
             FileWritterController file = new FileWritterController();
             try {
-                file.escreveVinculo(candidato.getNome(), Integer.toString(qtdArtigoQualis), saida);
+                file.escreveVinculo(candidato.getNome(), Integer.toString(qtdArtigoQualis), saida.get(0));
                 if(verboso == true){
                     for(Artigo artigo : listaArtigo){
 

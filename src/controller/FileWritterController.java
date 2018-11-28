@@ -18,7 +18,7 @@ public class FileWritterController {
      * @throws IOException
      */
     public void escrevePremio(String nome, String entrada, File saida) throws IOException {
-        FileWriter fileWriter = new FileWriter(saida);
+        FileWriter fileWriter = new FileWriter(saida, true);
         PrintWriter printWriter = new PrintWriter(fileWriter);
         printWriter.printf("%s: %s prêmios, totalizando %s pontos.", nome, entrada, entrada);
         printWriter.close();
@@ -46,7 +46,7 @@ public class FileWritterController {
      * @throws IOException
      */
     public void escreveVinculo(String nome, String entrada, File saida) throws IOException {
-        FileWriter fileWriter = new FileWriter(saida);
+        FileWriter fileWriter = new FileWriter(saida, true);
         PrintWriter printWriter = new PrintWriter(fileWriter);
         printWriter.printf("%s: %s vínculos, totalizando %s pontos.", nome, entrada, entrada);
         printWriter.close();
