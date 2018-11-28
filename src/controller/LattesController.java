@@ -3,6 +3,7 @@ package controller;
 import model.Candidato;
 import model.Premio;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.Year;
 import java.util.List;
@@ -40,7 +41,7 @@ public class LattesController {
         }
     }
 
-    public static void calculaPremios(List<Candidato> candidatoList, boolean verboso) throws IOException {
+    public static void calculaPremios(List<Candidato> candidatoList, boolean verboso, File saida) throws IOException {
 
         for (Candidato candidato : candidatoList) {
             int qtdPremios = 0;
@@ -54,12 +55,12 @@ public class LattesController {
             }
 
             FileWritterController file = new FileWritterController();
-            file.escrevePremio(candidato.getNome(), Integer.toString(qtdPremios));
+            file.escrevePremio(candidato.getNome(), Integer.toString(qtdPremios), saida);
             //TODO remover print
             System.out.println(candidato.getNome() + ": " + qtdPremios + " prêmios, totalizando " + qtdPremios + " pontos.");
             if(verboso == true){
                 for (Premio premios : listaPremio){
-                    file.escrevePremioVerboso(premios.getAno(), premios.getNome());
+                    file.escrevePremioVerboso(premios.getAno(), premios.getNome(), saida);
                     System.out.println(premios.getAno() + ": " + premios.getNome() + ".");
                 }
             }

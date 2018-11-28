@@ -2,6 +2,7 @@ package controller;
 
 import org.junit.Test;
 
+import java.io.File;
 import java.io.IOException;
 
 public class FileWritterControllerTest {
@@ -14,6 +15,7 @@ public class FileWritterControllerTest {
 
         FileWritterController test = new FileWritterController();
 
-        test.escrevePremio(nome, entrada);
+        File teste;
+        test.escrevePremio(nome, entrada, teste = new File("teste.txt"));
     }
 }

@@ -13,14 +13,14 @@ public class InputController {
 
         List<Candidato> candidatoList = new ArrayList<>();
         boolean verboso;
-        File saida = new File("");
+        List<File> caminhos = new ArrayList<>();
 
 
         //Verificação da indicação do arquivo de saída
         if(Arrays.stream(args).anyMatch("-o"::equals)){
 
             SetFiles setSaida = new SetFiles();
-            saida = setSaida.setArquivoSaida(args[Arrays.asList(args).indexOf("-o") + 1]);
+            caminhos.add(setSaida.setArquivoSaida(args[Arrays.asList(args).indexOf("-o") + 1]));
             System.out.println("ArroySaida");
         }else{
             throw new ComandoNaoEncontradoException("Comando -o não encontrado!");
@@ -71,7 +71,7 @@ public class InputController {
         else if(Arrays.stream(args).anyMatch("-pr"::equals)){
             LattesController.setPremios(candidatoList);
             try {
-                LattesController.calculaPremios(candidatoList, verboso, saida);
+                LattesController.calculaPremios(candidatoList, verboso, caminhos.get(0));
             } catch (IOException e) {
                 e.printStackTrace();
             }
