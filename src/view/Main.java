@@ -1,5 +1,6 @@
 package view;
 
+import controller.ComandoNaoEncontradoException;
 import controller.InputController;
 import controller.LattesController;
 import model.Candidato;
@@ -11,7 +12,7 @@ import java.util.List;
 public class Main {
 
     //Chama função que verifica parâmetros do programa
-    public void verificaEntrada(String[] args) throws IOException {
+    public void verificaEntrada(String[] args) throws ComandoNaoEncontradoException {
         InputController.verificaParametros(args);
     }
 
@@ -45,8 +46,11 @@ public class Main {
 
         Main main = new Main();
 
-        main.verificaEntrada(args);
-
+        try{
+            main.verificaEntrada(args);
+        }catch (ComandoNaoEncontradoException e) {
+            System.out.println(e.getMessage());
+        }
         /*
         for(int indice = 0; indice < args.length; indice++){
             if(args[indice].equals("-v")){

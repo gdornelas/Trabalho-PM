@@ -2,26 +2,28 @@ package controller;
 
 import model.Candidato;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class InputController {
-    public static void verificaParametros(String[] args) throws IOException {
+    public static void verificaParametros(String[] args) throws ComandoNaoEncontradoException {
 
         List<Candidato> candidatoList = new ArrayList<>();
         boolean verboso;
+        File saida = new File("");
+
 
         //Verificação da indicação do arquivo de saída
         if(Arrays.stream(args).anyMatch("-o"::equals)){
 
             SetFiles setSaida = new SetFiles();
-            setSaida.setArquivoSaida(args[Arrays.asList(args).indexOf("-o") + 1]);
+            saida = setSaida.setArquivoSaida(args[Arrays.asList(args).indexOf("-o") + 1]);
             System.out.println("ArroySaida");
         }else{
-            IllegalArgumentException erro = new IllegalArgumentException();
-            System.out.println("qqq"+erro.getMessage());
+            throw new ComandoNaoEncontradoException("Comando -o não encontrado!");
         }
 
         //Verificação de indicação do arquivo de log
@@ -52,7 +54,7 @@ public class InputController {
         //Verificação de indicação do modo verboso
         if(Arrays.stream(args).anyMatch("-v"::equals)){
             verboso = true;
-            System.out.println("Verboso ativado");
+            System.out.println("Modo verboso ativado");
         }else{
             verboso = false;
         }
@@ -68,7 +70,11 @@ public class InputController {
         //Saída referente aos prêmios
         else if(Arrays.stream(args).anyMatch("-pr"::equals)){
             LattesController.setPremios(candidatoList);
-            LattesController.calculaPremios(candidatoList, verboso);
+            try {
+                LattesController.calculaPremios(candidatoList, verboso, saida);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         //Saída referente aos artigos completos no Qualis Restrito
