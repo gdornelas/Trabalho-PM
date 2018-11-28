@@ -45,11 +45,8 @@ public class InputController {
                     candidatoList.add(LattesController.constroiCandidato(args[i + 1], args[i + 2]));
                 }
             }
-            //main.setArquivoSaida(Arrays.asList(args).indexOf("-o") + 1, Arrays.asList(args).indexOf("-o") + 2);
-            System.out.println("ArroyLog");
         }else{
-            IllegalArgumentException erro = new IllegalArgumentException();
-            System.out.println("qqq"+erro.getMessage());
+            throw new ComandoNaoEncontradoException("Comando -a não encontrado");
         }
 
         //Verificação de indicação do modo verboso
@@ -80,8 +77,8 @@ public class InputController {
 
         //Saída referente aos artigos completos no Qualis Restrito
         else if(Arrays.stream(args).anyMatch("-ar"::equals)){
-            //main.setArquivoSaida(Arrays.asList(args).indexOf("-o") + 1);
-            System.out.println("Verboso");
+            lattesController.setArtigos();
+            lattesController.calculaArtigosQualis();
         }
 
         //Saída referente aos artigos completos fora do Qualis Restrito

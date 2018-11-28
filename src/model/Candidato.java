@@ -9,7 +9,7 @@ public class Candidato {
     private String lattes;
 
     private List<Premio> premios = new ArrayList<>();
-    private List<String> artigos = new ArrayList<>();
+    private List<Artigo> artigos = new ArrayList<>();
     private List<String> eventos = new ArrayList<>();
     private List<Vinculo> vinculos = new ArrayList<>();
 
@@ -31,11 +31,11 @@ public class Candidato {
         this.premios = premios;
     }
 
-    public List<String> getArtigos() {
+    public List<Artigo> getArtigos() {
         return artigos;
     }
 
-    public void setArtigos(List<String> artigos) {
+    public void setArtigos(List<Artigo> artigos) {
         this.artigos = artigos;
     }
 

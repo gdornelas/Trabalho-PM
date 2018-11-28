@@ -1,5 +1,6 @@
 package controller;
 
+import model.Artigo;
 import model.Candidato;
 import model.Premio;
 import model.Vinculo;
@@ -67,7 +68,6 @@ public class LattesController {
     }
 
     public void setVinculo(List<Candidato> candidatoList){
-        XmlReader read = new XmlReader();
         XmlReader reader = new XmlReader();
 
         for (Candidato candidato : candidatoList){
@@ -107,4 +107,12 @@ public class LattesController {
         }
     }
 
+    public void setArtigos(List<Candidato> candidatoList) {
+        XmlReader reader = new XmlReader();
+
+        for(Candidato candidato : candidatoList){
+            List<Artigo> listaArtigos= reader.readArtigo(candidato.getLattes());
+            candidato.setArtigos(listaArtigos);
+        }
+    }
 }
