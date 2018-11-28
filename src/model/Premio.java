@@ -28,6 +28,6 @@ public class Premio {
 
     @Override
     public String toString(){
-        return "Premio [nome=" + nome + "]";
+        return "Premio [nome= " + nome + " ano = " + ano +"]";
     }
 }
