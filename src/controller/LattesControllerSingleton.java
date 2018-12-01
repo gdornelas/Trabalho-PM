@@ -54,9 +54,16 @@ public class LattesControllerSingleton {
         Candidato candidato = new Candidato();
         candidato.setNome(read.readNome(xml));
         candidato.setLattes(xml);
-        candidato.setSemestresSemReprovacao(reprovacoes);
+        candidato.setSemestresSemReprovacao(parseInt(reprovacoes));
 
         return candidato;
+    }
+
+    public int calculaReprovacoes(Candidato candidato){
+
+        final int valorReprovacoes = 1;
+
+        return valorReprovacoes * candidato.getSemestresSemReprovacao();
     }
 
     /**

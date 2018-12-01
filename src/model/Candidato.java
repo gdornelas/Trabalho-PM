@@ -9,8 +9,8 @@ import java.util.List;
 public class Candidato {
 
     private String nome;
-    private String semestresSemReprovacao;
     private String lattes;
+    private int semestresSemReprovacao;
     private int pontuacao = 0;
 
     private List<Premio> premios = new ArrayList<>();
@@ -19,13 +19,37 @@ public class Candidato {
     private List<Vinculo> vinculos = new ArrayList<>();
 
     //----------- Getters and Setters -----------
-
+    
     public String getNome() {
         return nome;
     }
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getLattes() {
+        return lattes;
+    }
+
+    public void setLattes(String lattes) {
+        this.lattes = lattes;
+    }
+
+    public int getSemestresSemReprovacao() {
+        return semestresSemReprovacao;
+    }
+
+    public void setSemestresSemReprovacao(int semestresSemReprovacao) {
+        this.semestresSemReprovacao = semestresSemReprovacao;
+    }
+
+    public int getPontuacao() {
+        return pontuacao;
+    }
+
+    public void setPontuacao(int pontuacao) {
+        this.pontuacao = pontuacao;
     }
 
     public List<Premio> getPremios() {
@@ -58,29 +82,5 @@ public class Candidato {
 
     public void setVinculos(List<Vinculo> vinculos) {
         this.vinculos = vinculos;
-    }
-
-    public String getSemestresSemReprovacao() {
-        return semestresSemReprovacao;
-    }
-
-    public void setSemestresSemReprovacao(String semestresSemReprovacao) {
-        this.semestresSemReprovacao = semestresSemReprovacao;
-    }
-
-    public String getLattes() {
-        return lattes;
-    }
-
-    public void setLattes(String lattes) {
-        this.lattes = lattes;
-    }
-
-    public int getPontuacao() {
-        return pontuacao;
-    }
-
-    public void setPontuacao(int pontuação) {
-        this.pontuacao = pontuação;
     }
 }
