@@ -1,7 +1,6 @@
 package view;
 
 import controller.ComandoNaoEncontradoException;
-import controller.InputController;
 
 public class Main {
 
@@ -12,8 +11,8 @@ public class Main {
      */
     public void verificaEntrada(String[] args) throws ComandoNaoEncontradoException {
 
-        InputController inputController = new InputController();
-        inputController.verificaParametros(args);
+        VerifyInput verifyInput = new VerifyInput();
+        verifyInput.verificaParametros(args);
     }
 
     /**

@@ -123,6 +123,8 @@ hs_err_pid*
 
 #Inputs and Outputs
 saida.txt
+log.txt
+teste.txt
 reisla.xml
 gleison.xml
 monica.xml

@@ -1,5 +1,8 @@
-package controller;
+package view;
 
+import controller.ComandoNaoEncontradoException;
+import controller.LattesController;
+import controller.SetFiles;
 import model.Candidato;
 
 import java.io.File;
@@ -11,12 +14,12 @@ import java.util.List;
 /**
  * Controlador de argumentos de entrada do programa
  */
-public class InputController {
+public class VerifyInput {
 
     /**
      * Função que verifica os parâmetros forncecidos e executa suas funções
      * @param args: lista de argumentos fornecidos
-     * @throws ComandoNaoEncontradoException: exceção caso algum argumento essencial não seja encontrado
+     * @throws ComandoNaoEncontradoException : exceção caso algum argumento essencial não seja encontrado
      */
     public void verificaParametros(String[] args) throws ComandoNaoEncontradoException {
 
