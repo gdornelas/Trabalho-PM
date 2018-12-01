@@ -19,7 +19,7 @@ public class Candidato {
     private List<Vinculo> vinculos = new ArrayList<>();
 
     //----------- Getters and Setters -----------
-    
+
     public String getNome() {
         return nome;
     }

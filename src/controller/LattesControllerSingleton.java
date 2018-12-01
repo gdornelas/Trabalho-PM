@@ -93,14 +93,17 @@ public class LattesControllerSingleton {
         int qtdPremios = 0;
 
         List<Premio> listaPremio = candidato.getPremios();
+        List<Premio> listaPremioUltimosAnos = new ArrayList<>();
 
         for (Premio premio : listaPremio) {
             if (parseInt(premio.getAno()) > Year.now().getValue() - ultimosAnosConsiderados) {
                 qtdPremios += 1;
-            }else{
-                listaPremio.remove(premio);
+
+                listaPremioUltimosAnos.add(premio);
             }
         }
+
+        candidato.setPremios(listaPremioUltimosAnos);
 
         return valorPrêmio * qtdPremios;
 
@@ -128,15 +131,13 @@ public class LattesControllerSingleton {
         for (Candidato candidato : candidatoList){
             List<Vinculo> listaVinculo = new ArrayList<>();
             listaVinculo.add(reader.readMestrado(candidato.getLattes()));
-
         }
-
     }
 
     /**
      * Função de cálculo da pontuação do candidatos em relação aos seus vínculos com a UNIRIO nos últimos anos
      * @param candidato : candidato a ser avaliado
-     * @return
+     * @return : pontuação referente aos vínculos do candidato
      */
     public int calculaVinculos(Candidato candidato){
 
@@ -146,17 +147,19 @@ public class LattesControllerSingleton {
         int qtdVinculos = 0;
 
         List<Vinculo> listaVinculo = candidato.getVinculos();
+        List<Vinculo> listaVinculoUltimosAnos = new ArrayList<>();
 
         for(Vinculo vinculo : listaVinculo){
             if(parseInt(vinculo.getAno()) > Year.now().getValue() - ultimosAnosConsiderados){
                 qtdVinculos += 1;
+                listaVinculoUltimosAnos.add(vinculo);
                 if(qtdVinculos == 2){
                     break;
                 }
-            }else{
-                listaVinculo.remove(vinculo);
             }
         }
+
+        candidato.setVinculos(listaVinculoUltimosAnos);
 
         return valorVinculo * qtdVinculos;
     }
