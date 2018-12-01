@@ -14,12 +14,31 @@ import java.util.List;
 /**
  * Controlador de argumentos de entrada do programa
  */
-public class VerifyInput {
+public class VerificaEntradaSingleton {
+
+    //Criação da do objeto
+    private static VerificaEntradaSingleton instance;
 
     /**
-     * Função que verifica os parâmetros forncecidos e executa suas funções
+     * Construtor privado pois a classe é um Singleton
+     */
+    private VerificaEntradaSingleton(){}
+
+    /**
+     * Método de instanciação do objeto
+     * @return: instância única do objeto VerificaEntradaSingleton
+     */
+    public static VerificaEntradaSingleton getInstance(){
+        if(instance == null){
+            instance = new VerificaEntradaSingleton();
+        }
+        return instance;
+    }
+
+    /**
+     * Função que verifica os parâmetros fornecidos e executa suas funções
      * @param args: lista de argumentos fornecidos
-     * @throws ComandoNaoEncontradoException : exceção caso algum argumento essencial não seja encontrado
+     * @throws ComandoNaoEncontradoException: exceção caso algum argumento essencial não seja encontrado
      */
     public void verificaParametros(String[] args) throws ComandoNaoEncontradoException {
 
@@ -121,7 +140,5 @@ public class VerifyInput {
         else{
             throw new ComandoNaoEncontradoException("Nenhum parâmetro foi informado!");
         }
-
-
     }
 }

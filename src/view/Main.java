@@ -11,8 +11,8 @@ public class Main {
      */
     public void verificaEntrada(String[] args) throws ComandoNaoEncontradoException {
 
-        VerifyInput verifyInput = new VerifyInput();
-        verifyInput.verificaParametros(args);
+        VerificaEntradaSingleton verificaEntradaSingleton = VerificaEntradaSingleton.getInstance();
+        verificaEntradaSingleton.verificaParametros(args);
     }
 
     /**
