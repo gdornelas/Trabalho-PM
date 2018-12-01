@@ -9,8 +9,9 @@ import java.util.List;
 public class Candidato {
 
     private String nome;
-    private String reprovacoes;
+    private String semestresSemReprovacao;
     private String lattes;
+    private int pontuacao = 0;
 
     private List<Premio> premios = new ArrayList<>();
     private List<Artigo> artigos = new ArrayList<>();
@@ -59,12 +60,12 @@ public class Candidato {
         this.vinculos = vinculos;
     }
 
-    public String getReprovacoes() {
-        return reprovacoes;
+    public String getSemestresSemReprovacao() {
+        return semestresSemReprovacao;
     }
 
-    public void setReprovacoes(String reprovacoes) {
-        this.reprovacoes = reprovacoes;
+    public void setSemestresSemReprovacao(String semestresSemReprovacao) {
+        this.semestresSemReprovacao = semestresSemReprovacao;
     }
 
     public String getLattes() {
@@ -73,5 +74,13 @@ public class Candidato {
 
     public void setLattes(String lattes) {
         this.lattes = lattes;
+    }
+
+    public int getPontuacao() {
+        return pontuacao;
+    }
+
+    public void setPontuacao(int pontuação) {
+        this.pontuacao = pontuação;
     }
 }
