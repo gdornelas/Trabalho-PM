@@ -1,12 +1,11 @@
 package view;
 
 import controller.ComandoNaoEncontradoException;
-import controller.LattesController;
+import controller.LattesControllerSingleton;
 import controller.SetFiles;
 import model.Candidato;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,8 +15,10 @@ import java.util.List;
  */
 public class VerificaEntradaSingleton {
 
-    //Criação da do objeto
-    private static VerificaEntradaSingleton instance;
+    //--------------------------------------------------- Singleton ---------------------------------------------------
+
+    //Criação do objeto
+    private static VerificaEntradaSingleton instanciaVerificaEntradaSingleton;
 
     /**
      * Construtor privado pois a classe é um Singleton
@@ -28,12 +29,14 @@ public class VerificaEntradaSingleton {
      * Método de instanciação do objeto
      * @return: instância única do objeto VerificaEntradaSingleton
      */
-    public static VerificaEntradaSingleton getInstance(){
-        if(instance == null){
-            instance = new VerificaEntradaSingleton();
+    public static VerificaEntradaSingleton getInstanciaVerificaEntradaSingleton(){
+        if(instanciaVerificaEntradaSingleton == null){
+            instanciaVerificaEntradaSingleton = new VerificaEntradaSingleton();
         }
-        return instance;
+        return instanciaVerificaEntradaSingleton;
     }
+
+    //--------------------------------------------------- Métodos ---------------------------------------------------
 
     /**
      * Função que verifica os parâmetros fornecidos e executa suas funções
@@ -45,7 +48,8 @@ public class VerificaEntradaSingleton {
         List<Candidato> candidatoList = new ArrayList<>();
         boolean verboso;
         List<File> caminhos = new ArrayList<>();
-        LattesController lattesController = new LattesController();
+
+        LattesControllerSingleton lattesController = LattesControllerSingleton.getInstanciaLattesControllerSingleton();
 
 
         //Verificação da indicação do arquivo de saída (ESSENCIAL)
@@ -91,24 +95,18 @@ public class VerificaEntradaSingleton {
         if(Arrays.stream(args).anyMatch("-c"::equals)){
             lattesController.setPremios(candidatoList);
             lattesController.setArtigos(candidatoList);
-            lattesController.setVinculo(candidatoList);
-            try {
-                lattesController.calculaPremios(candidatoList, verboso, caminhos.get(0));
-                lattesController.calculaArtigosQualis(candidatoList, verboso, caminhos);
-                lattesController.calculaVinculo(candidatoList, verboso, caminhos.get(0));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            lattesController.setVinculos(candidatoList);
         }
 
         //Saída referente aos prêmios
         else if(Arrays.stream(args).anyMatch("-pr"::equals)){
             lattesController.setPremios(candidatoList);
-            try {
-                lattesController.calculaPremios(candidatoList, verboso, caminhos.get(0));
-            } catch (IOException e) {
-                e.printStackTrace();
+
+            for (Candidato candidato : candidatoList){
+                int pontuacaoPremios = lattesController.calculaPremios(candidato);
+                candidato.setPontuacao(pontuacaoPremios);
             }
+
         }
 
         //Saída referente aos artigos completos no Qualis Restrito
@@ -132,8 +130,12 @@ public class VerificaEntradaSingleton {
 
         //Saída referente a existência de vínculo com a UNIRIO
         else if(Arrays.stream(args).anyMatch("-vi"::equals)){
-            lattesController.setVinculo(candidatoList);
-            lattesController.calculaVinculo(candidatoList, verboso, caminhos.get(0));
+            lattesController.setVinculos(candidatoList);
+
+            for (Candidato candidato : candidatoList){
+                int pontuacaoVinculos = lattesController.calculaVinculos(candidato);
+                candidato.setPontuacao(pontuacaoVinculos);
+            }
         }
 
         //Caso nenhum comando tenha sido indicado
