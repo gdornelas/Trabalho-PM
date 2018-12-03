@@ -141,6 +141,12 @@ public class VerificaEntradaSingleton {
                 int pontuacaoVinculos = lattesController.calculaVinculos(candidato);
                 candidato.setPontuacao(pontuacaoVinculos);
             }
+            FileWritterSingleton fileWritter = new FileWritterSingleton();
+            try {
+                fileWritter.escreveVinculo(candidatoList, verboso, caminhos.get(0));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         //Caso nenhum comando tenha sido indicado

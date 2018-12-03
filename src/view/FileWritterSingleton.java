@@ -2,6 +2,7 @@ package view;
 
 import model.Candidato;
 import model.Premio;
+import model.Vinculo;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -46,44 +47,31 @@ public class FileWritterSingleton {
     }
 
     /**
-     * Função de escrita do modo verboso de prêmios no arquivo de saída
-     * @param ano: ano do prêmio
-     * @param nome: nome do prêmio
-     * @param saida: indicação do arquivo de saída
-     * @throws IOException
-     */
-    public void escrevePremioVerboso(String ano, String nome, File saida) throws IOException {
-        FileWriter fileWriter = new FileWriter(saida, true);
-        PrintWriter printWriter = new PrintWriter(fileWriter);
-        printWriter.printf("\n%s: %s.", ano, nome);
-        printWriter.close();
-    }
-
-    /**
      * Função de escrita de vínculos no arquivo de saída
-     * @param nome: nome do candidato
-     * @param entrada: quantidade de vínculos
+     * @param candidatoList : lista de candidatos com vínculos que serão impressos
+     * @param verboso : indicação se o modo verboso está ativo ou não
      * @param saida: indicação do arquivo de saída
      * @throws IOException
      */
-    public void escreveVinculo(String nome, String entrada, File saida) throws IOException {
-        FileWriter fileWriter = new FileWriter(saida, true);
-        PrintWriter printWriter = new PrintWriter(fileWriter);
-        printWriter.printf("%s: %s vínculos, totalizando %s pontos.", nome, entrada, entrada);
-        printWriter.close();
-    }
+    public void escreveVinculo(List<Candidato> candidatoList, boolean verboso, File saida) throws IOException {
+        FileWriter fileWriter;
 
-    /**
-     * Função de escrita do modo verboso para vínculos no arquivo de saída
-     * @param ano: ano do vínculo
-     * @param nome: nome do vínculo
-     * @param saida: indicação do arquivo de saída
-     * @throws IOException
-     */
-    public void escreveVinculoVerboso(String ano, String nome, File saida) throws IOException {
-        FileWriter fileWriter = new FileWriter(saida, true);
+        if (saida.length() == 0){
+            fileWriter = new FileWriter(saida);
+        }else{
+            fileWriter = new FileWriter(saida, true);
+        }
+
         PrintWriter printWriter = new PrintWriter(fileWriter);
-        printWriter.printf("\n%s: %s.", ano, nome);
+
+        for (Candidato candidato : candidatoList) {
+            printWriter.printf("%s: %s vínculos, totalizando %s pontos.", candidato.getNome(), candidato.getVinculos().size(), candidato.getPontuacao());
+            if (verboso == true){
+                for (Vinculo vinculo : candidato.getVinculos()){
+                    printWriter.printf("\n%s: %s.", vinculo.getAno(), vinculo.getNome());
+                }
+            }
+        }
         printWriter.close();
     }
 }
