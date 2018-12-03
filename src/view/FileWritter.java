@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Controlador com funções de escrita nos arquivos texto de saída
  */
-public class FileWritterSingleton {
+public class FileWritter {
 
     /**
      * Função de escrita de prêmios no arquivo de saída
@@ -67,6 +67,32 @@ public class FileWritterSingleton {
         for (Candidato candidato : candidatoList) {
             printWriter.printf("\n%s: %s vínculos, totalizando %s pontos.", candidato.getNome(), candidato.getVinculos().size(), candidato.getPontuacao());
             if (verboso == true){
+                for (Vinculo vinculo : candidato.getVinculos()){
+                    printWriter.printf("\n%s: %s.", vinculo.getAno(), vinculo.getNome());
+                }
+            }
+        }
+        printWriter.close();
+    }
+
+    public void escreveTotal(List<Candidato> candidatoList, boolean verboso, File saida) throws IOException{
+        FileWriter fileWriter;
+
+        if (saida.length() == 0){
+            fileWriter = new FileWriter(saida);
+        }else{
+            fileWriter = new FileWriter(saida, true);
+        }
+
+        PrintWriter printWriter = new PrintWriter(fileWriter);
+
+        for (Candidato candidato : candidatoList){
+            printWriter.printf("\n%s: %s pontos.", candidato.getNome(), candidato.getPontuacao());
+            if (verboso == true){
+                for (Premio premio : candidato.getPremios()){
+                    printWriter.printf("\n%s: %s.", premio.getAno(), premio.getNome());
+                }
+
                 for (Vinculo vinculo : candidato.getVinculos()){
                     printWriter.printf("\n%s: %s.", vinculo.getAno(), vinculo.getNome());
                 }

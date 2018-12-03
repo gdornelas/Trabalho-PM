@@ -4,10 +4,8 @@ import model.Artigo;
 import model.Candidato;
 import model.Premio;
 import model.Vinculo;
-import view.FileWritterSingleton;
 
 import java.io.File;
-import java.io.IOException;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
@@ -129,7 +127,9 @@ public class LattesControllerSingleton {
         XmlReader reader = new XmlReader();
 
         List<Vinculo> listaVinculo = new ArrayList<>();
-        listaVinculo.add(reader.readMestrado(candidato.getLattes()));
+        if (reader.readMestrado(candidato.getLattes()) != null){
+            listaVinculo.add(reader.readMestrado(candidato.getLattes()));
+        }
 
         return listaVinculo;
     }

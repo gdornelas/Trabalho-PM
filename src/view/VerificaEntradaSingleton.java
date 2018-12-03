@@ -97,6 +97,27 @@ public class VerificaEntradaSingleton {
         //Saída completa
         if(Arrays.stream(args).anyMatch("-c"::equals)){
 
+            for (Candidato candidato : candidatoList){
+                candidato.setPremios(lattesController.setPremios(candidato));
+                candidato.setVinculos(lattesController.setVinculos(candidato));
+
+                int pontuacaoTotal = 0;
+
+                pontuacaoTotal += lattesController.calculaPremios(candidato);
+                pontuacaoTotal += lattesController.calculaVinculos(candidato);
+                pontuacaoTotal += lattesController.calculaReprovacoes(candidato);
+                candidato.setPontuacao(pontuacaoTotal);
+            }
+
+            Collections.sort(candidatoList, new ComparadorPontos().reversed());
+
+            FileWritter fileWritter = new FileWritter();
+            try {
+                fileWritter.escreveTotal(candidatoList, verboso, caminhos.get(0));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
 
         //Saída referente aos prêmios
@@ -110,7 +131,7 @@ public class VerificaEntradaSingleton {
 
             Collections.sort(candidatoList, new ComparadorPontos().reversed());
 
-            FileWritterSingleton fileWritter = new FileWritterSingleton();
+            FileWritter fileWritter = new FileWritter();
             try {
                 fileWritter.escrevePremio(candidatoList, verboso, caminhos.get(0));
             } catch (IOException e) {
@@ -149,7 +170,7 @@ public class VerificaEntradaSingleton {
 
             Collections.sort(candidatoList, new ComparadorPontos());
 
-            FileWritterSingleton fileWritter = new FileWritterSingleton();
+            FileWritter fileWritter = new FileWritter();
             try {
                 fileWritter.escreveVinculo(candidatoList, verboso, caminhos.get(0));
             } catch (IOException e) {
