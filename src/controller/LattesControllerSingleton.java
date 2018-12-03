@@ -4,6 +4,7 @@ import model.Artigo;
 import model.Candidato;
 import model.Premio;
 import model.Vinculo;
+import view.FileWritterSingleton;
 
 import java.io.File;
 import java.io.IOException;
@@ -106,7 +107,7 @@ public class LattesControllerSingleton {
         return valorPrêmio * qtdPremios;
 
         /*
-        FileWritterController file = new FileWritterController();
+        FileWritter file = new FileWritter();
         file.escrevePremio(candidato.getNome(), Integer.toString(qtdPremios), saida);
         //TODO remover print
         System.out.println(candidato.getNome() + ": " + qtdPremios + " prêmios, totalizando " + qtdPremios + " pontos.");
@@ -184,26 +185,6 @@ public class LattesControllerSingleton {
      * @param saida : indicação do arquivo de saída
      */
     public void calculaArtigosQualis(List<Candidato> candidatoList, boolean verboso, List<File> saida) {
-        for(Candidato candidato : candidatoList){
-            int qtdArtigoQualis = 0;
 
-            List<Artigo> listaArtigo = candidato.getArtigos();
-
-            for(Artigo artigo : listaArtigo){
-
-            }
-
-            FileWritterController file = new FileWritterController();
-            try {
-                file.escreveVinculo(candidato.getNome(), Integer.toString(qtdArtigoQualis), saida.get(0));
-                if(verboso == true){
-                    for(Artigo artigo : listaArtigo){
-
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }

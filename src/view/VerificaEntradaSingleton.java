@@ -6,6 +6,7 @@ import controller.SetFiles;
 import model.Candidato;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -104,7 +105,12 @@ public class VerificaEntradaSingleton {
                 int pontuacaoPremios = lattesController.calculaPremios(candidato);
                 candidato.setPontuacao(pontuacaoPremios);
             }
-
+            FileWritterSingleton fileWritter = new FileWritterSingleton();
+            try {
+                fileWritter.escrevePremio(candidatoList, verboso, caminhos.get(0));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         //Saída referente aos artigos completos no Qualis Restrito

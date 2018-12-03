@@ -1,26 +1,47 @@
-package controller;
+package view;
+
+import model.Candidato;
+import model.Premio;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 /**
  * Controlador com funções de escrita nos arquivos texto de saída
  */
-public class FileWritterController {
+public class FileWritterSingleton {
 
     /**
      * Função de escrita de prêmios no arquivo de saída
-     * @param nome: nome do candidato
-     * @param entrada: quantidade de prêmios do candidato
+     * @param candidatoList : lista de candidatos com prêmios que serão impressos
+     * @param verboso : indicação se o modo verboso está ativo ou não
      * @param saida: indicação do arquivo de saída
      * @throws IOException
      */
-    public void escrevePremio(String nome, String entrada, File saida) throws IOException {
-        FileWriter fileWriter = new FileWriter(saida, true);
+    public void escrevePremio(List<Candidato> candidatoList, boolean verboso, File saida) throws IOException {
+
+        FileWriter fileWriter;
+
+        if (saida.length() == 0){
+            fileWriter = new FileWriter(saida);
+        }else{
+            fileWriter = new FileWriter(saida, true);
+        }
+
         PrintWriter printWriter = new PrintWriter(fileWriter);
-        printWriter.printf("%s: %s prêmios, totalizando %s pontos.", nome, entrada, entrada);
+
+        for (Candidato candidato : candidatoList){
+            printWriter.printf("%s: %s prêmios, totalizando %s pontos.", candidato.getNome(), candidato.getPremios().size(), candidato.getPontuacao());
+            if (verboso == true){
+                for (Premio premio : candidato.getPremios()){
+                    printWriter.printf("\n%s: %s.", premio.getAno(), premio.getNome());
+                }
+            }
+        }
+
         printWriter.close();
     }
 
