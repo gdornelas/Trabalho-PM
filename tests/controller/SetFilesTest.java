@@ -19,7 +19,7 @@ public class SetFilesTest {
 
         SetFiles teste = new SetFiles();
 
-        //assertTrue(teste.setArquivoSaida("saidaq.txt").getAbsoluteFile().exists());
+        assertTrue(teste.setArquivoSaida("saida.txt").getAbsoluteFile().exists());
 
     }
 }
