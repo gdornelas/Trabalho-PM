@@ -1,7 +1,7 @@
 package view;
 
 import controller.ComandoNaoEncontradoException;
-import controller.ComparadorPontos;
+import model.ComparadorPontos;
 import controller.LattesControllerSingleton;
 import controller.SetFiles;
 import model.Candidato;

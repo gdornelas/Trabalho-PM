@@ -1,8 +1,13 @@
 package controller;
 
 import model.Premio;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
+import javax.xml.stream.XMLStreamException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +15,22 @@ import static org.junit.Assert.*;
 
 public class XmlReaderTest {
 
+    @Rule
+    public final ExpectedException exception = ExpectedException.none();
+
     /**
-     * Testa se o primeiro prêmio é obtido
+     * Teste de verificação se o arquivo existe
+     */
+    @Test
+    public void testReadPremioSemArquivo(){
+        XmlReader testeXML = new XmlReader();
+
+        exception.expect(FileNotFoundException.class);
+        testeXML.readPremio("naoexiste.xml");
+    }
+
+    /**
+     * Testa a função de obtenção de prêmios
      */
     @Test
     public void readPremio() {
@@ -25,7 +44,12 @@ public class XmlReaderTest {
 
         testeList.add(premio1);
 
+        //Testa se o primeiro prêmio é obtido corretamente
         assertEquals(testeList.get(0).toString(), testeXML.readPremio("gleison.xml").get(0).toString());
+
+        //Testa se o candidato não possui nenhum prêmio
+        assertTrue(testeXML.readPremio("reisla.xml").isEmpty());
+
     }
 
     /**
