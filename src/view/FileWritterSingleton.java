@@ -35,7 +35,7 @@ public class FileWritterSingleton {
         PrintWriter printWriter = new PrintWriter(fileWriter);
 
         for (Candidato candidato : candidatoList){
-            printWriter.printf("%s: %s prêmios, totalizando %s pontos.", candidato.getNome(), candidato.getPremios().size(), candidato.getPontuacao());
+            printWriter.printf("\n%s: %s prêmios, totalizando %s pontos.", candidato.getNome(), candidato.getPremios().size(), candidato.getPontuacao());
             if (verboso == true){
                 for (Premio premio : candidato.getPremios()){
                     printWriter.printf("\n%s: %s.", premio.getAno(), premio.getNome());
@@ -65,7 +65,7 @@ public class FileWritterSingleton {
         PrintWriter printWriter = new PrintWriter(fileWriter);
 
         for (Candidato candidato : candidatoList) {
-            printWriter.printf("%s: %s vínculos, totalizando %s pontos.", candidato.getNome(), candidato.getVinculos().size(), candidato.getPontuacao());
+            printWriter.printf("\n%s: %s vínculos, totalizando %s pontos.", candidato.getNome(), candidato.getVinculos().size(), candidato.getPontuacao());
             if (verboso == true){
                 for (Vinculo vinculo : candidato.getVinculos()){
                     printWriter.printf("\n%s: %s.", vinculo.getAno(), vinculo.getNome());

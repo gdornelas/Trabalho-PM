@@ -1,6 +1,7 @@
 package view;
 
 import controller.ComandoNaoEncontradoException;
+import controller.ComparadorPontos;
 import controller.LattesControllerSingleton;
 import controller.SetFiles;
 import model.Candidato;
@@ -9,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -105,6 +107,9 @@ public class VerificaEntradaSingleton {
                 int pontuacaoPremios = lattesController.calculaPremios(candidato);
                 candidato.setPontuacao(pontuacaoPremios);
             }
+
+            Collections.sort(candidatoList, new ComparadorPontos().reversed());
+
             FileWritterSingleton fileWritter = new FileWritterSingleton();
             try {
                 fileWritter.escrevePremio(candidatoList, verboso, caminhos.get(0));
@@ -141,6 +146,9 @@ public class VerificaEntradaSingleton {
                 int pontuacaoVinculos = lattesController.calculaVinculos(candidato);
                 candidato.setPontuacao(pontuacaoVinculos);
             }
+
+            Collections.sort(candidatoList, new ComparadorPontos());
+
             FileWritterSingleton fileWritter = new FileWritterSingleton();
             try {
                 fileWritter.escreveVinculo(candidatoList, verboso, caminhos.get(0));
