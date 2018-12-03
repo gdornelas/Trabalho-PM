@@ -100,12 +100,14 @@ public class VerificaEntradaSingleton {
             for (Candidato candidato : candidatoList){
                 candidato.setPremios(lattesController.setPremios(candidato));
                 candidato.setVinculos(lattesController.setVinculos(candidato));
+                candidato.setArtigos(lattesController.setArtigos(candidato));
 
                 int pontuacaoTotal = 0;
 
                 pontuacaoTotal += lattesController.calculaPremios(candidato);
                 pontuacaoTotal += lattesController.calculaVinculos(candidato);
                 pontuacaoTotal += lattesController.calculaReprovacoes(candidato);
+                pontuacaoTotal += lattesController.calculaArtigosQualis(candidato);
                 candidato.setPontuacao(pontuacaoTotal);
             }
 
@@ -141,26 +143,61 @@ public class VerificaEntradaSingleton {
 
         //Saída referente aos artigos completos no Qualis Restrito
         else if(Arrays.stream(args).anyMatch("-ar"::equals)){
-            lattesController.setArtigos(candidatoList);
-            lattesController.calculaArtigosQualis(candidatoList, verboso, caminhos);
+
+            for (Candidato candidato : candidatoList){
+                candidato.setArtigos(lattesController.setArtigos(candidato));
+                int pontuacaoArtigos = lattesController.calculaArtigosQualis(candidato);
+                candidato.setPontuacao(pontuacaoArtigos);
+            }
+
+            Collections.sort(candidatoList, new ComparadorPontos().reversed());
+
+            FileWritter fileWritter = new FileWritter();
+            try {
+                fileWritter.escreveArtigo(candidatoList, verboso, caminhos.get(0));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         //Saída referente aos artigos completos fora do Qualis Restrito
         else if(Arrays.stream(args).anyMatch("-anr"::equals)){
-            lattesController.setArtigos(candidatoList);
-            //lattesController.calculaArtigosQualisFora(candidatoList, verboso, caminhos);
+            for (Candidato candidato : candidatoList){
+                candidato.setArtigos(lattesController.setArtigos(candidato));
+                int pontuacaoArtigos = lattesController.calculaArtigosForaQualis(candidato);
+                candidato.setPontuacao(pontuacaoArtigos);
+            }
 
+            Collections.sort(candidatoList, new ComparadorPontos().reversed());
+
+            FileWritter fileWritter = new FileWritter();
+            try {
+                fileWritter.escreveArtigo(candidatoList, verboso, caminhos.get(0));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         //Saída referente a participação de eventos classificados
         else if(Arrays.stream(args).anyMatch("-pe"::equals)){
-            //lattesController.setEventos(candidatoList);
-            //lattesController.calculaEventos(candidatoList, verboso, caminhos);
+            /*for (Candidato candidato : candidatoList){
+                candidato.setEventos(lattesController.setEventos(candidato));
+                int pontuacaoEventos = lattesController.calculaEventos(candidato);
+                candidato.setPontuacao(pontuacaoEventos);
+            }
+
+            Collections.sort(candidatoList, new ComparadorPontos().reversed());
+
+            FileWritter fileWritter = new FileWritter();
+            try {
+                fileWritter.escreveEvento(candidatoList, verboso, caminhos.get(0));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }*/
         }
 
         //Saída referente a existência de vínculo com a UNIRIO
         else if(Arrays.stream(args).anyMatch("-vi"::equals)){
-            //lattesController.setVinculos(candidatoList);
 
             for (Candidato candidato : candidatoList){
                 candidato.setVinculos(lattesController.setVinculos(candidato));
@@ -168,7 +205,7 @@ public class VerificaEntradaSingleton {
                 candidato.setPontuacao(pontuacaoVinculos);
             }
 
-            Collections.sort(candidatoList, new ComparadorPontos());
+            Collections.sort(candidatoList, new ComparadorPontos().reversed());
 
             FileWritter fileWritter = new FileWritter();
             try {

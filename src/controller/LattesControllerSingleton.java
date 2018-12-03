@@ -6,6 +6,7 @@ import model.Premio;
 import model.Vinculo;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
@@ -104,18 +105,6 @@ public class LattesControllerSingleton {
 
         return valorPrêmio * qtdPremios;
 
-        /*
-        FileWritter file = new FileWritter();
-        file.escrevePremio(candidato.getNome(), Integer.toString(qtdPremios), saida);
-        //TODO remover print
-        System.out.println(candidato.getNome() + ": " + qtdPremios + " prêmios, totalizando " + qtdPremios + " pontos.");
-        if(verboso == true){
-            for (Premio premios : listaPremio){
-                file.escrevePremioVerboso(premios.getAno(), premios.getNome(), saida);
-                System.out.println(premios.getAno() + ": " + premios.getNome() + ".");
-            }
-        }
-        */
     }
 
     /**
@@ -166,25 +155,91 @@ public class LattesControllerSingleton {
 
     /**
      * Função de set dos artigos de cada candidato
-     * @param candidatoList: lista de candidatos a serem avaliados
+     * @param candidato : candidato em que se procura os artigos publicados
+     * @return : lista de artigos do candidato
      */
-    public void setArtigos(List<Candidato> candidatoList) {
+    public List<Artigo> setArtigos(Candidato candidato) {
         XmlReader reader = new XmlReader();
+        CsvReader csvReader = new CsvReader();
 
-        for(Candidato candidato : candidatoList){
-            List<Artigo> listaArtigos= reader.readTrabalhosEventos(candidato.getLattes());
-            listaArtigos.addAll(reader.readArtigoPublicado(candidato.getLattes()));
-            candidato.setArtigos(listaArtigos);
+        List<Artigo> listaArtigos= new ArrayList<>();
+
+        if (reader.readTrabalhosEventos(candidato.getLattes()) != null){
+            listaArtigos.addAll(reader.readTrabalhosEventos(candidato.getLattes()));
         }
+
+        if (reader.readArtigoPublicado(candidato.getLattes()) != null) {
+            listaArtigos.addAll(reader.readArtigoPublicado(candidato.getLattes()));
+        }
+
+        for (Artigo artigo : listaArtigos) {
+            try {
+                artigo.setQualis(csvReader.setQualis(artigo.getNome()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return listaArtigos;
     }
 
     /**
      * Função de cálculo da pontuação dos candidatos em relação aos artigos completos no Qualis Restrito
-     * @param candidatoList : lista de candidatos a serem avaliados
-     * @param verboso : boolean de indicação se o modo verboso está ativo
-     * @param saida : indicação do arquivo de saída
+     * @param candidato : candidato a ser avaliado
+     * @return : pontuação referente aos artigos do candidato
      */
-    public void calculaArtigosQualis(List<Candidato> candidatoList, boolean verboso, List<File> saida) {
+    public int calculaArtigosQualis(Candidato candidato) {
 
+        final int ultimosAnosConsiderados = 10;
+        final int valorArtigoQualis = 3;
+
+        int qtdArtigosQualis = 0;
+
+        List<Artigo> listaArtigo = candidato.getArtigos();
+        List<Artigo> listaArtigoUltimosAnos = new ArrayList<>();
+
+        for (Artigo artigo : listaArtigo){
+            if(parseInt(artigo.getAno()) > Year.now().getValue() - ultimosAnosConsiderados){
+                qtdArtigosQualis += 1;
+                if(artigo.getQualis() != null){
+                    if (artigo.getQualis().equals("A1") || artigo.getQualis().equals("A2") || artigo.getQualis().equals("B1")) {
+                        listaArtigoUltimosAnos.add(artigo);
+                    }
+                }
+            }
+        }
+
+        candidato.setArtigos(listaArtigoUltimosAnos);
+
+        return qtdArtigosQualis * valorArtigoQualis;
+    }
+
+    /**
+     * Função de cálculo da pontuação dos candidatos em relação aos artigos completos no Qualis Restrito
+     * @param candidato : candidato a ser avaliado
+     * @return : pontuação referente aos artigos do candidato
+     */
+    public int calculaArtigosForaQualis(Candidato candidato){
+        final int ultimosAnosConsiderados = 10;
+        final int valorArtigoForaQualis = 1;
+        int qtdArtigosForaQualis = 0;
+
+        List<Artigo> listaArtigo = candidato.getArtigos();
+        List<Artigo> listaArtigoUltimosAnos = new ArrayList<>();
+
+        for (Artigo artigo : listaArtigo){
+            if(parseInt(artigo.getAno()) > Year.now().getValue() - ultimosAnosConsiderados){
+                qtdArtigosForaQualis += 1;
+                if(artigo.getQualis() != null){
+                    if (artigo.getQualis().equals("B2") || artigo.getQualis().equals("B3") || artigo.getQualis().equals("B4") || artigo.getQualis().equals("B5")){
+                        listaArtigoUltimosAnos.add(artigo);
+                    }
+                }
+            }
+        }
+
+        candidato.setArtigos(listaArtigoUltimosAnos);
+
+        return qtdArtigosForaQualis * valorArtigoForaQualis;
     }
 }
