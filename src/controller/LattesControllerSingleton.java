@@ -68,16 +68,14 @@ public class LattesControllerSingleton {
 
     /**
      * Função de set dos prêmios de cada candidato
-     * @param candidatoList : lista de candidatos a serem avaliados
+     * @param candidato : candidato em que se procura os prêmios
+     * @return : lista de prêmios do candidato
      */
-    public void setPremios(List<Candidato> candidatoList){
+    public List<Premio> setPremios(Candidato candidato){
 
         XmlReader read = new XmlReader();
-
-        for (Candidato candidato : candidatoList){
-            List<Premio> listaPremios = read.readPremio(candidato.getLattes());
-            candidato.setPremios(listaPremios);
-        }
+        List<Premio> listaPremios = read.readPremio(candidato.getLattes());
+        return listaPremios;
     }
 
     /**
@@ -123,15 +121,16 @@ public class LattesControllerSingleton {
 
     /**
      * Função de set dos vínculos de cada candidato
-     * @param candidatoList: lista de candidatos a serem avaliados
+     * @param candidato : candidato em que se procura os vínculos
+     * @return : lista de vínculos do candidato
      */
-    public void setVinculos(List<Candidato> candidatoList){
+    public List<Vinculo> setVinculos(Candidato candidato){
         XmlReader reader = new XmlReader();
 
-        for (Candidato candidato : candidatoList){
-            List<Vinculo> listaVinculo = new ArrayList<>();
-            listaVinculo.add(reader.readMestrado(candidato.getLattes()));
-        }
+        List<Vinculo> listaVinculo = new ArrayList<>();
+        listaVinculo.add(reader.readMestrado(candidato.getLattes()));
+
+        return listaVinculo;
     }
 
     /**

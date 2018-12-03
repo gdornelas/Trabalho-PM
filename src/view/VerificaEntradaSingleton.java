@@ -93,16 +93,14 @@ public class VerificaEntradaSingleton {
 
         //Saída completa
         if(Arrays.stream(args).anyMatch("-c"::equals)){
-            lattesController.setPremios(candidatoList);
-            lattesController.setArtigos(candidatoList);
-            lattesController.setVinculos(candidatoList);
+
         }
 
         //Saída referente aos prêmios
         else if(Arrays.stream(args).anyMatch("-pr"::equals)){
-            lattesController.setPremios(candidatoList);
 
             for (Candidato candidato : candidatoList){
+                candidato.setPremios(lattesController.setPremios(candidato));
                 int pontuacaoPremios = lattesController.calculaPremios(candidato);
                 candidato.setPontuacao(pontuacaoPremios);
             }
@@ -130,9 +128,10 @@ public class VerificaEntradaSingleton {
 
         //Saída referente a existência de vínculo com a UNIRIO
         else if(Arrays.stream(args).anyMatch("-vi"::equals)){
-            lattesController.setVinculos(candidatoList);
+            //lattesController.setVinculos(candidatoList);
 
             for (Candidato candidato : candidatoList){
+                candidato.setVinculos(lattesController.setVinculos(candidato));
                 int pontuacaoVinculos = lattesController.calculaVinculos(candidato);
                 candidato.setPontuacao(pontuacaoVinculos);
             }
